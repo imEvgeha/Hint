@@ -66,22 +66,21 @@ function App() {
     }
   };
 
+  const handleMainClick = (e) => {
+    if (e.target.className === 'main') {
+      setClick(false);
+      clearInterval(timer);
+    }
+    if (e.target.className === 'column') {
+      setClick(false);
+      clearInterval(timer);
+    } else {
+      return;
+    }
+  };
+
   return (
-    <div
-      className="main"
-      onClick={(e) => {
-        if (e.target.className === 'main') {
-          setClick(false);
-          clearInterval(timer);
-        }
-        if (e.target.className === 'column') {
-          setClick(false);
-          clearInterval(timer);
-        } else {
-          return;
-        }
-      }}
-    >
+    <div className="main" onClick={handleMainClick}>
       <div className="column">
         <p className="text" ref={textRef} onClick={handleMouseClick}>
           Groups:{' '}
