@@ -16,6 +16,7 @@ function App() {
   const [click, setClick] = useState(false);
   const [clickData, setClickData] = useState(null);
   const [error, setError] = useState(false);
+  const [position, setPosition] = useState('RightTop');
   const clientWidth = document.body.clientWidth;
   const clientHeight = document.body.clientHeight;
   const textRef = useRef();
@@ -31,6 +32,29 @@ function App() {
 
   const getHintHeight = () => {
     return groups.length * 27.5;
+  };
+
+  const getMainJustifyContent = (pos) => {
+    if (pos === 'RightTop' || pos === 'RightCenter' || pos === 'RightBottom') {
+      return 'flex-end';
+    }
+    if (pos === 'CentTop' || pos === 'CentCenter' || pos === 'CentBottom') {
+      return 'center';
+    }
+    if (pos === 'LeftTop' || pos === 'LeftCenter' || pos === 'LeftBottom') {
+      return 'flex-start';
+    } else {
+      return 'bla';
+    }
+  };
+
+  const getColumnJustifyContent = (pos) => {
+    if (pos === 'RightTop' || pos === 'CentTop' || pos === 'LeftTop')
+      return 'flex-start';
+    if (pos === 'RightCenter' || pos === 'CentCenter' || pos === 'LeftCenter')
+      return 'center';
+    if (pos === 'RightBottom' || pos === 'CentBottom' || pos === 'LeftBottom')
+      return 'flex-end';
   };
 
   const createHintPosition = (data) => {
@@ -79,14 +103,41 @@ function App() {
     }
   };
 
+  const handleChange = (event) => {
+    setPosition(event.target.value);
+  };
+
   return (
-    <div className="main" onClick={handleMainClick}>
-      <div className="column">
-        <p className="text" ref={textRef} onClick={handleMouseClick}>
-          Groups:{' '}
-          {groups.length < 3 ? groups[0] + ' ' + groups[1] : groups.length}
-        </p>
+    <div
+      className="main"
+      onClick={handleMainClick}
+      style={{ justifyContent: getMainJustifyContent(position) }}
+    >
+      <div
+        className="column"
+        style={{ alignItems: getColumnJustifyContent(position) }}
+      >
+        <div>
+          <p className="text" ref={textRef} onClick={handleMouseClick}>
+            Groups:{' '}
+            {groups.length < 3 ? groups[0] + ' ' + groups[1] : groups.length}
+          </p>
+          <div>
+            <select onChange={handleChange}>
+              <option value="RightTop">Right Top</option>
+              <option value="RightCenter">Right Center</option>
+              <option value="RightBottom">Right Bottom</option>
+              <option value="CentTop">Center Top</option>
+              <option value="CentCenter">Center Center</option>
+              <option value="CentBottom">Center Bottom</option>
+              <option value="LeftTop">Left Top</option>
+              <option value="LeftCenter">Left Center</option>
+              <option value="LeftBottom">Left Bottom</option>
+            </select>
+          </div>
+        </div>
       </div>
+
       {click && error === false ? (
         <div
           className="hint"

@@ -13,7 +13,7 @@ code {
 }
 .main {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-content: space-between;
   height: 100%;
   width: 100%;
@@ -23,7 +23,7 @@ code {
   background-color: wheat;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 725px;
   width: 250px;
 }
